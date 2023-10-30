@@ -11,20 +11,18 @@ from triton.runtime.cache import get_cache_manager
 from triton.runtime.jit import version_key
 
 
-def _get_triton_shared_opt_path():
+def _get_triton_shared_opt_path() -> str:
     path = os.getenv("TRITON_SHARED_OPT_PATH", "")
-    if path is "":
-        assert "TRITON_SHARED_OPT_PATH is not set."
-    else:
-        return path
+    if path == "":
+        assert Exception("TRITON_SHARED_OPT_PATH is not set.")
+    return path
 
 
-def _get_llvm_bin_path(bin_name: str):
+def _get_llvm_bin_path(bin_name: str) -> str:
     path = os.getenv("LLVM_BINARY_DIR", "")
-    if path is "":
-        assert "LLVM_BINARY_DIR is not set."
-    else:
-        return f"{path}/{bin_name}"
+    if path == "":
+        raise Exception("LLVM_BINARY_DIR is not set.")
+    return f"{path}/{bin_name}"
 
 
 def ttir_to_ttsharedir(mod):
